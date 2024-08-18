@@ -45,6 +45,12 @@ async function run() {
       });
       res.cookie("token", token, cookieOptions).send({ success: true });
     });
+    app.post("/logout", async (req, res) => {
+      const user = req.body;
+      res
+        .clearCookie("token", { ...cookieOptions, maxAge: 0 })
+        .send({ success: true });
+    });
   } finally {
   }
 }
