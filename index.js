@@ -58,6 +58,10 @@ async function run() {
         .send({ success: true });
     });
     // service related apis
+    app.get("/food", async (req, res) => {
+      const result = await foodCollection.find().toArray();
+      res.send(result);
+    });
     app.post("/add-food", async (req, res) => {
       const food = req.body;
       // console.log(food);
