@@ -44,6 +44,7 @@ const cookieOptions = {
 async function run() {
   try {
     const foodCollection = client.db("shareBite").collection("food");
+    const userCollection = client.db("shareBite").collection("user");
     app.post("/jwt", async (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -66,6 +67,11 @@ async function run() {
       const food = req.body;
       // console.log(food);
       const result = await foodCollection.insertOne(food);
+      res.send(result);
+    });
+    app.post("/user", async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
       res.send(result);
     });
   } finally {
