@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 var cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -71,6 +71,12 @@ async function run() {
       const email = req.query.email;
       const query = { donatorEmail: email };
       const result = await foodCollection.find(query).toArray();
+      res.send(result);
+    });
+    app.get("/foods/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await foodCollection.findOne(query);
       res.send(result);
     });
     app.post("/food", async (req, res) => {
