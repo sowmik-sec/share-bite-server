@@ -85,6 +85,27 @@ async function run() {
       const result = await foodCollection.insertOne(food);
       res.send(result);
     });
+    app.put("/foods/:id", async (req, res) => {
+      const food = req.body;
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          foodName: food.foodName,
+          foodImage: food.foodImage,
+          foodQuantity: food.foodQuantity,
+          pickupLocation: food.pickupLocation,
+          expiredDate: food.expiredDate,
+          additionalNotes: food.additionalNotes,
+          donatorImage: food.donatorImage,
+          donatorEmail: food.donatorEmail,
+          foodStatus: food.foodStatus,
+        },
+      };
+      const result = await foodCollection.updateOne(filter, updateDoc, options);
+      res.send(result);
+    });
     app.post("/user", async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
