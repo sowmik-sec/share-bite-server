@@ -106,6 +106,20 @@ async function run() {
       const result = await foodCollection.updateOne(filter, updateDoc, options);
       res.send(result);
     });
+    app.patch("/foods/:id", async (req, res) => {
+      const id = req.params.id;
+      const food = req.body;
+      const updateDoc = {
+        $set: {
+          foodStatus: food.foodStatus,
+        },
+      };
+      const result = await foodCollection.updateOne(
+        { _id: new ObjectId(id) },
+        updateDoc
+      );
+      res.send(result);
+    });
     app.delete("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
