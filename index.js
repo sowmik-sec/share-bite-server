@@ -64,15 +64,20 @@ async function run() {
     });
     // service related apis
     app.get("/foods", async (req, res) => {
-      const result = await foodCollection.find().toArray();
-      res.send(result);
-    });
-    app.get(`/foods`, async (req, res) => {
       const email = req.query.email;
-      const query = { donatorEmail: email };
-      const result = await foodCollection.find(query).toArray();
-      res.send(result);
+
+      if (email) {
+        // If an email query parameter is provided, filter by email
+        const query = { donatorEmail: email };
+        const result = await foodCollection.find(query).toArray();
+        res.send(result);
+      } else {
+        // Otherwise, return all foods
+        const result = await foodCollection.find().toArray();
+        res.send(result);
+      }
     });
+
     app.get("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
