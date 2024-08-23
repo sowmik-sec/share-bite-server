@@ -106,6 +106,12 @@ async function run() {
       const result = await foodCollection.updateOne(filter, updateDoc, options);
       res.send(result);
     });
+    app.delete("/foods/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await foodCollection.deleteOne(query);
+      res.send(result);
+    });
     app.post("/user", async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
