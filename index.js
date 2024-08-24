@@ -149,6 +149,21 @@ async function run() {
       const result = await foodRequestCollection.insertOne(foodRequest);
       res.send(result);
     });
+    app.put("/food-requests/:id", async (req, res) => {
+      const filter = { _id: new ObjectId(req.params.id) };
+      const foodRequest = req.body;
+      const updateDoc = {
+        $set: {
+          foodName: foodRequest.foodName,
+          quantity: foodRequest.quantity,
+          location: foodRequest.location,
+          pickupTime: foodRequest.pickupTime,
+          specialInstructions: foodRequest.specialInstructions,
+        },
+      };
+      const result = await foodRequestCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
     app.post("/user", async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
