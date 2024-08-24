@@ -134,6 +134,10 @@ async function run() {
       const result = await foodCollection.deleteOne(query);
       res.send(result);
     });
+    app.get("/food-requests", async (req, res) => {
+      const result = await foodRequestCollection.find().toArray();
+      res.send(result);
+    });
     app.post("/food-requests", async (req, res) => {
       const foodRequest = req.body;
       const result = await foodRequestCollection.insertOne(foodRequest);
