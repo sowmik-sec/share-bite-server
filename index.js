@@ -49,6 +49,9 @@ async function run() {
   try {
     const foodCollection = client.db("shareBite").collection("food");
     const userCollection = client.db("shareBite").collection("user");
+    const foodRequestCollection = client
+      .db("shareBite")
+      .collection("foodRequest");
     app.post("/jwt", async (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -129,6 +132,11 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await foodCollection.deleteOne(query);
+      res.send(result);
+    });
+    app.post("/food-requests", async (req, res) => {
+      const foodRequest = req.body;
+      const result = await foodRequestCollection.insertOne(foodRequest);
       res.send(result);
     });
     app.post("/user", async (req, res) => {
