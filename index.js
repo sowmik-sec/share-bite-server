@@ -120,6 +120,7 @@ async function run() {
       const updateDoc = {
         $set: {
           foodStatus: food.foodStatus,
+          claimedBy: food.claimedBy,
         },
       };
       const result = await foodCollection.updateOne(
