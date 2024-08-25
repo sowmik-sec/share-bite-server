@@ -145,6 +145,12 @@ async function run() {
       const result = await foodRequestCollection.findOne(query);
       res.send(result);
     });
+    app.get("/my-claimed-foods", async (req, res) => {
+      const email = req.query.email;
+      const query = { claimedBy: email };
+      const result = await foodCollection.find(query).toArray();
+      res.send(result);
+    });
     app.post("/food-requests", async (req, res) => {
       const foodRequest = req.body;
       const result = await foodRequestCollection.insertOne(foodRequest);
