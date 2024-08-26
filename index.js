@@ -96,6 +96,13 @@ async function run() {
       res.send({ count });
     });
 
+    app.get("/foodCount", async (req, res) => {
+      const email = req.query.email;
+      const query = { donatorEmail: email };
+      const count = await foodCollection.countDocuments(query);
+      res.send({ count });
+    });
+
     app.get("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
