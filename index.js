@@ -91,6 +91,11 @@ async function run() {
       }
     });
 
+    app.get("/foodCountAll", async (req, res) => {
+      const count = await foodCollection.estimatedDocumentCount();
+      res.send({ count });
+    });
+
     app.get("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
