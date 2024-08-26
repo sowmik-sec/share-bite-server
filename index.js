@@ -68,15 +68,25 @@ async function run() {
     // service related apis
     app.get("/foods", async (req, res) => {
       const email = req.query.email;
+      const page = parseInt(req.query.page);
+      const size = parseInt(req.query.size);
 
       if (email) {
         // If an email query parameter is provided, filter by email
         const query = { donatorEmail: email };
-        const result = await foodCollection.find(query).toArray();
+        const result = await foodCollection
+          .find(query)
+          .skip(page * size)
+          .limit(size)
+          .toArray();
         res.send(result);
       } else {
         // Otherwise, return all foods
-        const result = await foodCollection.find().toArray();
+        const result = await foodCollection
+          .find()
+          .skip(page * size)
+          .limit(size)
+          .toArray();
         res.send(result);
       }
     });
