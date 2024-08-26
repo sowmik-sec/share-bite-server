@@ -102,7 +102,12 @@ async function run() {
       const count = await foodCollection.countDocuments(query);
       res.send({ count });
     });
-
+    app.get("/foodCount/request", async (req, res) => {
+      const email = req.query.email;
+      const query = { claimedBy: email };
+      const count = await foodCollection.countDocuments(query);
+      res.send({ count });
+    });
     app.get("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
