@@ -91,6 +91,11 @@ async function run() {
       }
     });
 
+    app.get("/featured-foods", async (req, res) => {
+      const result = await foodCollection.find().skip(0).limit(3).toArray();
+      res.send(result);
+    });
+
     app.get("/foodCountAll", async (req, res) => {
       const count = await foodCollection.estimatedDocumentCount();
       res.send({ count });
