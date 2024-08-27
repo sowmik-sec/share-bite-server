@@ -10,7 +10,11 @@ const port = 5000;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://sharebite-9ad0a.web.app",
+      "https://sharebite-9ad0a.firebaseapp.com",
+    ],
     credentials: true,
   })
 );
